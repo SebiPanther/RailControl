@@ -28,7 +28,7 @@ SoftwareSerial SerialBoard(10, 11); //D10/D11
 void setup() {
   Serial.begin(115200);
   nunchuk.begin();
-  SerialBoard.begin(19200);
+  SerialBoard.begin(115200);
 }
 
 boolean success = false;
@@ -98,6 +98,9 @@ void loop() {
 
   SerialBoard.write(ups.UART_Packet, sizeof(UART_Packet_t));
   
+  if (SerialBoard.available()) {
+    Serial.write(SerialBoard.read());
+  }
   Serial.println(base_pwm);
   delay(20);
 }
